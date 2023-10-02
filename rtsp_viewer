@@ -7,16 +7,16 @@
 # Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: RTSP Viewer
-# Description:       Turns a Raspberry Pi into an RTSP Viewer for multiple feeds.
+# Short-Description: RTSP Viewier
+# Description:       Turns a Raspbery Pi into a RTSP Viewer for multiple feeds.
 ### END INIT INFO
 
-#cd /etc/init.d && sudo wget https://raw.githubusercontent.com/maddog986/raspberry_pi_rtsp/master/rtsp_viewer -O rtsp_viewer && sudo chmod +x ./rtsp_viewer && sudo ./rtsp_viewer install
+#cd /etc/init.d && sudo wget https://raw.githubusercontent.com/rttgnck/raspberry_pi_rtsp_vlc/master/rtsp_viewer -O rtsp_viewer && sudo chmod +x ./rtsp_viewer && sudo ./rtsp_viewer install
 
 # Start displaying camera feeds
 case "$1" in
     start|repair)
-        # Loads file that has the feeds
+        #loads file that has the feeds
         readarray cameras < /home/pi/rtsp_viewer.txt
 
         if [ "$1" = "start" ]; then
@@ -104,7 +104,7 @@ case "$1" in
         /etc/init.d/rtsp_viewer stop
 
         # Update script
-        wget https://raw.githubusercontent.com/maddog986/raspberry_pi_rtsp/master/rtsp_viewer -O /etc/init.d/rtsp_viewer
+        wget https://raw.githubusercontent.com/rttgnck/raspberry_pi_rtsp_rtsp/master/rtsp_viewer -O /etc/init.d/rtsp_viewer
 
         # Start it up again
         /etc/init.d/rtsp_viewer start
@@ -124,7 +124,7 @@ case "$1" in
 
         #create feeds file
         echo "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov" > /home/pi/rtsp_viewer.txt
-        
+
         # Check if vlc is installed and if not, install
         if [ $(dpkg-query -W -f='${Status}' vlc 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
             apt-get install vlc -y
